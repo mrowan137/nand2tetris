@@ -1,0 +1,89 @@
+/**
+ * ALU (Arithmetic Logic Unit).
+ * Steps of the implementation require to compute in order.
+ *
+ * Implementation:
+ *   x =  0 if zx == 1: zero x
+ *   x = !x if nx == 1: negate x
+ *   y =  0 if zy == 1: zero y
+ *   y = !y if ny == 1: negate y
+ *   result = x + y if f == 1: add x, y
+ *   result = x & y if f == 0: bitwise and x, y
+ *   result = !result if no == 1: negate result
+ *   zr = 1 if result = 0: flag for a zero result
+ *   ng = 1 if result < 0: flag for a negative result
+ */
+
+CHIP ALU {
+    IN  
+        x[16], y[16],  // 16-bit operands
+        zx,            // x =  0 if zx == 1
+        nx,            // x = !x if nx == 1
+        zy,            // y =  0 if zy == 1
+        ny,            // y = !y if ny == 1
+        f,             // out = (x + y) if (f == 1) else (x & y)
+        no;            // out = !out if no == 1
+
+    OUT 
+        out[16], // 16-bit result
+        zr,      // zr = 1 if result == 0
+        ng;      // ng = 1 if result <  0
+
+    PARTS:
+        // x = 0 if zx == 1
+        Mux16(a=x, b=false,
+              sel=zx,
+              out=rx);
+
+        // x = !x if nx == 1
+        Not16(in=rx, out=notRx);
+        Mux16(a=rx, b=notRx,
+              sel=nx,
+              out=resX);
+
+        // y = 0 if zy == 1
+        Mux16(a=y, b=false,
+              sel=zy,
+              out=ry);
+
+        // y = !y if ny == 1
+        Not16(in=ry, out=notRy);
+        Mux16(a=ry, b=notRy,
+              sel=ny,
+              out=resY);
+
+        // out = (x + y) if (f == 1) else (x & y)
+        Add16(a=resX, b=resY,
+              out=AddXY);
+        And16(a=resX, b=resY,
+              out=AndXY);
+        Mux16(a=AndXY, b=AddXY,
+              sel=f,
+              out=resF);
+
+        // out = !out if (no == 1)
+        Not16(in=resF, out=notResF);
+        Mux16(a=resF, b=notResF,
+              sel=no,
+              out=res);
+
+        // set output flag for if result is zero:
+        // or together all the bits and make sure it is zero
+        Or16(a=res,b=false, out[0..7]=resEqZeroLow8, out[8..15]=resEqZeroHigh8);
+        Or8Way(in=resEqZeroLow8, out=orOfLow8);
+        Or8Way(in=resEqZeroHigh8, out=orOfHigh8);
+        Or(a=orOfLow8, b=orOfHigh8, out=resNotEqZero);
+        Not(in=resNotEqZero, out=resEqZero);
+        Mux(a=false, b=true,
+            sel=resEqZero,
+            out=zr);  // zr = 1 if (res == 0)
+
+        // set output flag for if result is negative:
+        // check the most significant bit is equal to one
+        And16(a=res, b=true, out[15]=resIsNeg);
+        Mux(a=false, b=true,
+            sel=resIsNeg,
+            out=ng);  // ng = 1 if (res < 0)
+
+        And16(a=res, b=true, out=out);
+}

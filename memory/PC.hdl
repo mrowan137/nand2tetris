@@ -1,0 +1,32 @@
+/**
+ * 16-bit counter with load, reset, and inc control bits.
+ * If reset == 1, out is set to 0.
+ * If load == 1, out is set to in.
+ * If inc == 1, out is incremented by 1.
+ * If none of these conditions are met, out remains the same.
+ */
+
+CHIP PC {
+  IN in[16],load,inc,reset;
+  OUT out[16];
+
+  PARTS: 
+    Inc16(in=loaded, out=loadedPlusOne);
+
+    // compute selection for each branch, and a flag tells whether to save:
+    // Mux16(a=loaded, b=loadedPlusOne, sel=inc, out=maybeInc);
+    // Mux16(a=maybeInc, b=in, sel=load, out=maybeLoadMaybeInc);
+    // Mux16(a=maybeLoadMaybeInc, b=false, sel=reset, out=save);
+    // Or8Way(in[0]=load, in[1]=inc, in[2]=reset, out=loadOrIncOrReset);
+    // Register(in=save, load=loadOrIncOrReset, out=out, out=loaded);
+
+    // can write it compactly, combining Mux16, Or8Way, and realizing
+    // can set load = true (because save in a case where not loading
+    // the new input, incrementing, or reseting, would just overwrite
+    // with the old value which is OK):
+    Mux8Way16(a=loaded, b=loadedPlusOne, c=in, d=in, 
+              e=false, f=false, g=false, h=false,
+              sel[2]=reset, sel[1]=load, sel[0]=inc,
+              out=save);
+    Register(in=save, load=true, out=out, out=loaded);
+}

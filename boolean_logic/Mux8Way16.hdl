@@ -1,0 +1,32 @@
+/**
+ * 16-bit 8-way Mux gate: out[i] = Mux16(
+ *                                   Mux4Way16(a[i], b[i], c[i], d[i], sel[0..1]),
+ *                                   Mux4Way16(e[i], f[i], g[i], h[i], sel[0..1]),
+ *                                   sel[2]
+ *                                 )
+ * for i = 0, 1, ..., 15.
+ *
+ *    sel[2] sel[1] sel[0]  out[i]
+ *    ----------------------------
+ *      0      0      0      a[i]
+ *      0      0      1      b[i]
+ *      0      1      0      c[i]
+ *      0      1      1      d[i]
+ *      1      0      0      e[i]
+ *      1      0      1      f[i]
+ *      1      1      0      g[i]
+ *      1      1      1      h[i]
+ *
+ */
+
+CHIP Mux8Way16 {
+  IN a[16], b[16], c[16], d[16],
+     e[16], f[16], g[16], h[16],
+     sel[3];
+  OUT out[16];
+
+  PARTS:
+    Mux4Way16(a=a, b=b, c=c, d=d, sel=sel[0..1], out=mux16abcd);
+    Mux4Way16(a=e, b=f, c=g, d=h, sel=sel[0..1], out=mux16efgh);
+    Mux16(a=mux16abcd, b=mux16efgh, sel=sel[2], out=out);
+}

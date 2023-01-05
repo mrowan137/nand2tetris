@@ -1,0 +1,26 @@
+/**
+ * 16-bit 4-way Mux gate: out[i] = Mux16(
+ *                                   Mux16(a[i], b[i], sel[0]),
+ *                                   Mux16(c[i], d[i], sel[0]),
+ *                                   sel[1]
+ *                                 )
+ * for i = 0, 1, ..., 15.
+ *
+ *    sel[1] sel[0]  out[i]
+ *    ---------------------
+ *      0      0      a[i]
+ *      0      1      b[i]
+ *      1      0      c[i]
+ *      1      1      d[i]
+ *
+ */
+
+CHIP Mux4Way16 {
+  IN a[16], b[16], c[16], d[16], sel[2];
+  OUT out[16];
+
+  PARTS:
+    Mux16(a=a, b=b, sel=sel[0], out=mux16ab);
+    Mux16(a=c, b=d, sel=sel[0], out=mux16cd);
+    Mux16(a=mux16ab, b=mux16cd, sel=sel[1], out=out);
+}

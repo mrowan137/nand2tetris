@@ -1,0 +1,21 @@
+/**
+ * And gate: out = Not( Nand(a, b) )
+ *               = Nand( Nand(a, b), Nand(a, b) )
+ * 
+ *    a b  out
+ *    --------
+ *    0 0   0
+ *    0 1   0
+ *    1 0   0
+ *    1 1   1
+ *
+ */
+
+CHIP And {
+  IN a, b;
+  OUT out;
+
+  PARTS:
+    Nand (a = a, b = b, out = andAB);
+    Not (in = andAB, out = out);
+}

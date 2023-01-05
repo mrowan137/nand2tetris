@@ -1,0 +1,21 @@
+/**
+ * 16-bit Or gate: out[i] = Or(a[i], b[i]) for i = 0, 1, ..., 15.
+ * 
+ *    a[i] b[i]  out[i]
+ *    -----------------
+ *     0    0      0
+ *     0    1      1
+ *     1    0      1
+ *     1    1      1
+ */
+
+CHIP Or16 {
+  IN a[16], b[16];
+  OUT out[16];
+
+  PARTS:
+    Not16 (in[0..15] = a, out[0..15] = notA16);
+    Not16 (in[0..15] = b, out[0..15] = notB16);
+    And16 (a[0..15] = notA16, b[0..15] = notB16, out[0..15] = andNotA16NotB16);
+    Not16 (in[0..15] = andNotA16NotB16, out[0..15] = out);
+}

@@ -1,0 +1,26 @@
+/**
+ * Memory has 8 registers, each 16 bits wide.
+ * If load==1, in value is loaded to address.
+ * The value at address will be output to out.
+ */
+
+CHIP RAM8 {
+    IN in[16], load, address[3];
+    OUT out[16];
+
+    PARTS:
+      DMux8Way(in=load, sel=address,
+        a=dmuxOut0, b=dmuxOut1, c=dmuxOut2, d=dmuxOut3,
+        e=dmuxOut4, f=dmuxOut5, g=dmuxOut6, h=dmuxOut7);
+      Register(in=in, load=dmuxOut0, out=regOut0);
+      Register(in=in, load=dmuxOut1, out=regOut1);
+      Register(in=in, load=dmuxOut2, out=regOut2);
+      Register(in=in, load=dmuxOut3, out=regOut3);
+      Register(in=in, load=dmuxOut4, out=regOut4);
+      Register(in=in, load=dmuxOut5, out=regOut5);
+      Register(in=in, load=dmuxOut6, out=regOut6);
+      Register(in=in, load=dmuxOut7, out=regOut7);
+      Mux8Way16(a=regOut0, b=regOut1, c=regOut2, d=regOut3,
+                e=regOut4, f=regOut5, g=regOut6, h=regOut7,
+                sel=address, out=out);
+}

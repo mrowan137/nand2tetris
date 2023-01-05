@@ -1,0 +1,23 @@
+/**
+ * Or gate: out = Or(a, b)
+ *              = Not( And(Not(a), Not(b) )
+ * 
+ *    a b  out
+ *    --------
+ *    0 0   0
+ *    0 1   1
+ *    1 0   1
+ *    1 1   1
+ *
+ */
+
+CHIP Or {
+  IN a, b;
+  OUT out;
+
+  PARTS:
+    Not (in = a, out = notA);
+    Not (in = b, out = notB);
+    And (a = notA, b = notB, out = andNotANotB);
+    Not (in = andNotANotB, out = out);
+}

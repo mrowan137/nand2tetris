@@ -1,0 +1,25 @@
+/**
+ * Demux gate: out1 = And( Not(sel), in )
+ *             out2 = And( sel     , in )
+ * 
+ *    sel in  out1 out2
+ *    ----------------
+ *     0  0    0    0
+ *     0  1    1    0
+ *     1  0    0    0
+ *     1  1    0    1
+ *
+ */
+
+CHIP DMux {
+  IN in, sel;
+  OUT a, b;
+
+  PARTS:
+    // And( Not(sel), in )
+    Not (in = sel, out = notSel);
+    And (a = notSel, b = in, out = a);
+  
+    // And( sel     , in )
+    And (a = sel, b = in, out = b);
+}

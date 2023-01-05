@@ -1,0 +1,33 @@
+/**
+ * HACK computer, consists of CPU and memory (ROM, RAM).
+ * reset == 0: executes program stored in ROM
+ * reset == 1: execution of program restarts
+ * Program may accept keyboard input, and output to display.
+ */
+
+CHIP Computer {
+    IN reset;
+
+    PARTS:
+      ROM32K(
+        address=addressROM,
+        out=currentInstruction
+      );
+
+      CPU(
+        inM=readFromMemory,
+        instruction=currentInstruction,
+        reset=reset,
+        outM=inRAM,
+        writeM=writeMemoryFlag,
+        addressM=addressRAM,
+        pc=addressROM
+      );
+
+      Memory(
+        in=inRAM,
+        load=writeMemoryFlag,
+        address=addressRAM,
+        out=readFromMemory
+      );
+}
