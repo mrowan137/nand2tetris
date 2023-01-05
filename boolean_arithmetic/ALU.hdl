@@ -32,8 +32,8 @@ CHIP ALU {
   PARTS:
     // x = 0 if zx == 1
     Mux16(a=x, b=false,
-      sel=zx,
-      out=rx);
+          sel=zx,
+          out=rx);
 
     // x = !x if nx == 1
     Not16(in=rx, out=notRx);
