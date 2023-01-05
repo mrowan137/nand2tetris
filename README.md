@@ -8,7 +8,7 @@ by Hebrew University of Jerusalem through Coursera.
 ## Description
 
 Contents of the repository are as follows:
-* [boolean_logic](https://github.com/mrowan137/nand2tetris/blob/main/boolean_logic):
+* [boolean_logic](https://github.com/mrowan137/nand2tetris/blob/main/boolean_logic) —
   [HDL (Hardware Description Language)](https://drive.google.com/file/d/1dPj4XNby9iuAs-47U9k3xtYy9hJ-ET0T/view)
   implementations of elementary logic gates:
   * [And.hdl](https://github.com/mrowan137/nand2tetris/blob/main/boolean_logic/And.hdl)
@@ -25,14 +25,14 @@ Contents of the repository are as follows:
   * [Mux8Way16.hdl](https://github.com/mrowan137/nand2tetris/blob/main/boolean_logic/Mux8Way16.hdl)
   * [DMux4Way.hdl](https://github.com/mrowan137/nand2tetris/blob/main/boolean_logic/DMux4Way.hdl)
   * [DMux8Way.hdl](https://github.com/mrowan137/nand2tetris/blob/main/boolean_logic/DMux8Way.hdl)
-* [boolean_arithmetic](https://github.com/mrowan137/nand2tetris/blob/main/boolean_arithmetic):
+* [boolean_arithmetic](https://github.com/mrowan137/nand2tetris/blob/main/boolean_arithmetic) —
   HDL implementations of set of chips which together lead to HACK ALU:
   * [HalfAdder.hdl](https://github.com/mrowan137/nand2tetris/blob/main/boolean_arithmetic/HalfAdder.hdl)
   * [FullAdder.hdl](https://github.com/mrowan137/nand2tetris/blob/main/boolean_arithmetic/FullAdder.hdl)
   * [Add16.hdl](https://github.com/mrowan137/nand2tetris/blob/main/boolean_arithmetic/Add16.hdl)
   * [Inc16.hdl](https://github.com/mrowan137/nand2tetris/blob/main/boolean_arithmetic/Inc16.hdl)
   * [ALU.hdl](https://github.com/mrowan137/nand2tetris/blob/main/boolean_arithmetic/ALU.hdl)
-* [memory](https://github.com/mrowan137/nand2tetris/blob/main/memory):
+* [memory](https://github.com/mrowan137/nand2tetris/blob/main/memory) —
   HDL implementation of main RAM memory unit of HACK computer:
   * [Bit.hdl](https://github.com/mrowan137/nand2tetris/blob/main/memory/Bit.hdl)
   * [Register.hdl](https://github.com/mrowan137/nand2tetris/blob/main/memory/Register.hdl)
@@ -42,16 +42,16 @@ Contents of the repository are as follows:
   * [RAM4K.hdl](https://github.com/mrowan137/nand2tetris/blob/main/memory/RAM4K.hdl)
   * [RAM16K.hdl](https://github.com/mrowan137/nand2tetris/blob/main/memory/RAM16K.hdl)
   * [PC.hdl](https://github.com/mrowan137/nand2tetris/blob/main/memory/PC.hdl)  
-* [machine_language_programming](https://github.com/mrowan137/nand2tetris/blob/main/machine_language_programming):
+* [machine_language_programming](https://github.com/mrowan137/nand2tetris/blob/main/machine_language_programming) —
   HACK assembly language programs:
   * [Mult.asm](https://github.com/mrowan137/nand2tetris/blob/main/machine_language_programming/Mult.asm)
   * [Fill.asm](https://github.com/mrowan137/nand2tetris/blob/main/machine_language_programming/Fill.asm)
-* [computer_architecture](https://github.com/mrowan137/nand2tetris/blob/main/computer_architecture):
+* [computer_architecture](https://github.com/mrowan137/nand2tetris/blob/main/computer_architecture) —
   HDL implementation of the HACK computer, composed of ROM & main RAM memory
   unit, and CPU:
   * [Memory.hdl](https://github.com/mrowan137/nand2tetris/blob/main/computer_architecture/Memory.hdl)
   * [CPU.hdl](https://github.com/mrowan137/nand2tetris/blob/main/computer_architecture/CPU.hdl)
-* [hack_assembler](https://github.com/mrowan137/nand2tetris/blob/main/hack_assembler):
+* [hack_assembler](https://github.com/mrowan137/nand2tetris/blob/main/hack_assembler) —
   HACK assembler that can convert error-free HACK assembly language to
   corresponding HACK machine code.
 
