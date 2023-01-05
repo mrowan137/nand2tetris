@@ -9,7 +9,7 @@ by Hebrew University of Jerusalem through Coursera.
 
 Contents of the repository are as follows:
 * [boolean_logic](https://github.com/mrowan137/nand2tetris/blob/main/boolean_logic):
-  [HDL (Hardware Description Language) guide](https://drive.google.com/file/d/1dPj4XNby9iuAs-47U9k3xtYy9hJ-ET0T/view)
+  [HDL (Hardware Description Language)](https://drive.google.com/file/d/1dPj4XNby9iuAs-47U9k3xtYy9hJ-ET0T/view)
   implementations of elementary logic gates:
   * [And.hdl](https://github.com/mrowan137/nand2tetris/blob/main/boolean_logic/And.hdl)
   * [Or.hdl](https://github.com/mrowan137/nand2tetris/blob/main/boolean_logic/Or.hdl)
