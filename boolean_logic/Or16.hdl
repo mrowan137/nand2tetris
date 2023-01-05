@@ -14,8 +14,8 @@ CHIP Or16 {
   OUT out[16];
 
   PARTS:
-    Not16 (in[0..15] = a, out[0..15] = notA16);
-    Not16 (in[0..15] = b, out[0..15] = notB16);
-    And16 (a[0..15] = notA16, b[0..15] = notB16, out[0..15] = andNotA16NotB16);
-    Not16 (in[0..15] = andNotA16NotB16, out[0..15] = out);
+    Not16(in[0..15]=a, out[0..15]=notA16);
+    Not16(in[0..15]=b, out[0..15]=notB16);
+    And16(a[0..15]=notA16, b[0..15]=notB16, out[0..15]=andNotA16NotB16);
+    Not16(in[0..15]=andNotA16NotB16, out[0..15]=out);
 }

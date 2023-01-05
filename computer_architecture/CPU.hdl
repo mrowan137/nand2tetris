@@ -18,84 +18,84 @@
 
 CHIP CPU {
 
-    IN  inM[16],         // M value input (contents of RAM[A])
-        instruction[16], // Instruction to execute
-        reset;           // Flag to restart current program (1) or continue (0)
+  IN  inM[16],         // M value input (contents of RAM[A])
+      instruction[16], // Instruction to execute
+      reset;           // Flag to restart current program (1) or continue (0)
 
-    OUT outM[16],        // M value output
-        writeM,          // Flag whether to write to M
-        addressM[15],    // Address of M in data memory
-        pc[15];          // Address of next instruction to execute
+  OUT outM[16],        // M value output
+      writeM,          // Flag whether to write to M
+      addressM[15],    // Address of M in data memory
+      pc[15];          // Address of next instruction to execute
 
-    PARTS:
-      // opcode 0 for A-instruction (ALU input comes from instruction),
-      //        1 for C-instruction (ALU input comes from ALU output);
-      //        instruction[15] i the opcode flag
-      Mux16(a=instruction, b=outALU, sel=instruction[15], out=inARegister);
+  PARTS:
+    // opcode 0 for A-instruction (ALU input comes from instruction),
+    //        1 for C-instruction (ALU input comes from ALU output);
+    //        instruction[15] i the opcode flag
+    Mux16(a=instruction, b=outALU, sel=instruction[15], out=inARegister);
 
-      // A-register load flag is first bit of destination field;
-      // output is routed as CPU output
-      And(a=instruction[15], b=instruction[5], out= CInstructionLoadARegister);
-      Not(in=instruction[15],out=isAInstruction);
-      Or(a=CInstructionLoadARegister,b=isAInstruction,out=loadARegister);
-      ARegister(in=inARegister, load=loadARegister, out=outARegister);
-      And16(a=outARegister, b=true, out[0..14]=addressM);
+    // A-register load flag is first bit of destination field;
+    // output is routed as CPU output
+    And(a=instruction[15], b=instruction[5], out= CInstructionLoadARegister);
+    Not(in=instruction[15],out=isAInstruction);
+    Or(a=CInstructionLoadARegister,b=isAInstruction,out=loadARegister);
+    ARegister(in=inARegister, load=loadARegister, out=outARegister);
+    And16(a=outARegister, b=true, out[0..14]=addressM);
 
-      // D-register load flag is second bit of destination field
-      And(a=instruction[15], b=instruction[4],out=loadDRegister);
-      DRegister(in=outALU, load=loadDRegister, out=inALUx);
+    // D-register load flag is second bit of destination field
+    And(a=instruction[15], b=instruction[4],out=loadDRegister);
+    DRegister(in=outALU, load=loadDRegister, out=inALUx);
 
-      // output is either value of A-register, or of selected memory register;
-      And(a=instruction[15], b=instruction[12], out=cond);
-      Mux16(a=outARegister, b=inM, sel=cond, out=inALUy);
+    // output is either value of A-register, or of selected memory register;
+    And(a=instruction[15], b=instruction[12], out=cond);
+    Mux16(a=outARegister, b=inM, sel=cond, out=inALUy);
 
-      ALU(x=inALUx,y=inALUy,     // inputs
-        zx=instruction[11],      // control bits
-        nx=instruction[10],
-        zy=instruction[9],
-        ny=instruction[8],
-        f=instruction[7],
-        no=instruction[6],
-        out=outALU,              // output
-        zr=outALUZeroFlag,       // flag for zero output
-        ng=outALUNegativeFlag);  // flag for negative output
+    ALU(
+      x=inALUx,y=inALUy,       // inputs
+      zx=instruction[11],      // control bits
+      nx=instruction[10],
+      zy=instruction[9],
+      ny=instruction[8],
+      f=instruction[7],
+      no=instruction[6],
+      out=outALU,              // output
+      zr=outALUZeroFlag,       // flag for zero output
+      ng=outALUNegativeFlag);  // flag for negative output
 
-      // ALU output routed to CPU output
-      And16(a=outALU, b=true, out=outM);
+    // ALU output routed to CPU output
+    And16(a=outALU, b=true, out=outM);
 
-      // Write to memory flag controlled by third field of destination bit,
-      // and only write if C-instruction
-      And(a=instruction[3], b=instruction[15], out=writeM);
+    // Write to memory flag controlled by third field of destination bit,
+    // and only write if C-instruction
+    And(a=instruction[3], b=instruction[15], out=writeM);
 
-      // Program counter emits address of the next instruction;
-      // if no jump, increment
-      Not(in=outALUZeroFlag, out=outALUNonZeroFlag);
-      Not(in=outALUNegativeFlag, out=outALUNonNegativeFlag);
-  
-      And(a=outALUNonNegativeFlag, b=outALUNonZeroFlag, out=condJGT);
-      And(a=true                 , b=outALUZeroFlag   , out=condJEQ);
-      And(a=outALUNonNegativeFlag, b=true             , out=condJGE);
-      And(a=outALUNegativeFlag   , b=true             , out=condJLT);
-      And(a=true                 , b=outALUNonZeroFlag, out=condJNE);
-      Or (a=outALUNegativeFlag   , b=outALUZeroFlag, out=condJLE);
-  
-      Mux8Way16(         // j2 j1 j0  
-        a=false,         //  0  0  0  | null : unconditional no jump
-        b[0]=condJGT,    //  0  0  1  | JGT  : jump if ng == 0 && zr == 0
-        c[0]=condJEQ,    //  0  1  0  | JEQ  : jump if            zr == 1
-        d[0]=condJGE,    //  0  1  1  | JGE  : jump if ng == 0
-        e[0]=condJLT,    //  1  0  0  | JLT  : jump if ng == 1
-        f[0]=condJNE,    //  1  0  1  | JNE  : jump if            zr == 0
-        g[0]=condJLE,    //  1  1  0  | JLE  : jump if ng == 1 || zr == 1
-        h[0]=true,       //  1  1  1  | JMP  : unconditional jump
-        sel[0]=instruction[0],
-        sel[1]=instruction[1],
-        sel[2]=instruction[2],
-        out[0]=conditionalJump
-      );
+    // Program counter emits address of the next instruction;
+    // if no jump, increment
+    Not(in=outALUZeroFlag, out=outALUNonZeroFlag);
+    Not(in=outALUNegativeFlag, out=outALUNonNegativeFlag);
+
+    And(a=outALUNonNegativeFlag, b=outALUNonZeroFlag, out=condJGT);
+    And(a=true                 , b=outALUZeroFlag   , out=condJEQ);
+    And(a=outALUNonNegativeFlag, b=true             , out=condJGE);
+    And(a=outALUNegativeFlag   , b=true             , out=condJLT);
+    And(a=true                 , b=outALUNonZeroFlag, out=condJNE);
+    Or (a=outALUNegativeFlag   , b=outALUZeroFlag, out=condJLE);
+
+    Mux8Way16(         // j2 j1 j0  
+      a=false,         //  0  0  0  | null : unconditional no jump
+      b[0]=condJGT,    //  0  0  1  | JGT  : jump if ng == 0 && zr == 0
+      c[0]=condJEQ,    //  0  1  0  | JEQ  : jump if            zr == 1
+      d[0]=condJGE,    //  0  1  1  | JGE  : jump if ng == 0
+      e[0]=condJLT,    //  1  0  0  | JLT  : jump if ng == 1
+      f[0]=condJNE,    //  1  0  1  | JNE  : jump if            zr == 0
+      g[0]=condJLE,    //  1  1  0  | JLE  : jump if ng == 1 || zr == 1
+      h[0]=true,       //  1  1  1  | JMP  : unconditional jump
+      sel[0]=instruction[0],
+      sel[1]=instruction[1],
+      sel[2]=instruction[2],
+      out[0]=conditionalJump);
 
       And(a=conditionalJump, b=instruction[15], out=pcDoLoad);
       Not(in=pcDoLoad, out=pcDoInc);
       PC(in=outARegister, load=pcDoLoad, inc=pcDoInc, reset=reset,
-        out[0..14]=pc);
+         out[0..14]=pc);
 }

@@ -1,9 +1,9 @@
 /**
  * 4-way Demux gate:
- *   out0 = Demux( Demux(in, sel[1])[0], sel[0])[0]
- *   out1 = Demux( Demux(in, sel[1])[0], sel[0])[1]
- *   out2 = Demux( Demux(in, sel[1])[1], sel[0])[0]
- *   out3 = Demux( Demux(in, sel[1])[1], sel[0])[1]
+ *   out0 = Demux( Demux(in, sel[1])[0], sel[0] )[0]
+ *   out1 = Demux( Demux(in, sel[1])[0], sel[0] )[1]
+ *   out2 = Demux( Demux(in, sel[1])[1], sel[0] )[0]
+ *   out3 = Demux( Demux(in, sel[1])[1], sel[0] )[1]
  * 
  *    sel[1] sel[0]  a  b  c  d
  *    --------------------------
@@ -15,11 +15,11 @@
  */
 
 CHIP DMux4Way {
-    IN in, sel[2];
-    OUT a, b, c, d;
+  IN in, sel[2];
+  OUT a, b, c, d;
 
-    PARTS:
-      DMux(in=in, sel=sel[1], a=dmuxAB, b=dmuxCD);
-      DMux(in=dmuxAB, sel=sel[0], a=a, b=b);
-      DMux(in=dmuxCD, sel=sel[0], a=c, b=d);
+  PARTS:
+    DMux(in=in, sel=sel[1], a=dmuxAB, b=dmuxCD);
+    DMux(in=dmuxAB, sel=sel[0], a=a, b=b);
+    DMux(in=dmuxCD, sel=sel[0], a=c, b=d);
 }

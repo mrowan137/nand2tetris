@@ -24,26 +24,26 @@ CHIP Mux {
   OUT out;
 
   PARTS:
-    // And( a     , Not(b), Not(sel) )
-    Not (in = b, out = notB);
-    Not (in = sel, out = notSel);
-    And (a = a, b = notB, out = andAnotB);
-    And (a = andAnotB, b = notSel, out = r1);
+    // And( a, Not(b), Not(sel) )
+    Not(in=b, out=notB);
+    Not(in=sel, out=notSel);
+    And(a=a, b=notB, out=andAnotB);
+    And(a=andAnotB, b=notSel, out=r1);
 
-    // And( a     , b     , Not(sel) )
-    And (a = a, b = b, out = andAB);
-    And (a = andAB, b = notSel, out = r2);
+    // And( a, b, Not(sel) )
+    And(a=a, b=b, out=andAB);
+    And(a=andAB, b=notSel, out=r2);
 
-    // And( Not(a), b     , sel      )
-    Not (in = a, out = notA);
-    And (a = notA, b = b, out = andNotAB);
-    And (a = andNotAB, b = sel, out = r3);
+    // And( Not(a), b, sel )
+    Not(in=a, out=notA);
+    And(a=notA, b=b, out=andNotAB);
+    And(a=andNotAB, b=sel, out=r3);
   
-    // And( a     , b     , sel      )
-    And (a = andAB, b = sel, out = r4);
+    // And( a, b, sel )
+    And(a=andAB, b=sel, out=r4);
 
-    // Mux( a     , b     , sel      )
-    Or (a = r1, b = r2, out = r12);
-    Or (a = r3, b = r4, out = r34);
-    Or (a = r12, b = r34, out = out);
+    // Mux( a, b, sel )
+    Or(a=r1, b=r2, out=r12);
+    Or(a=r3, b=r4, out=r34);
+    Or(a=r12, b=r34, out=out);
 }

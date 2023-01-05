@@ -3,11 +3,11 @@
  */
 
 CHIP HalfAdder {
-    IN a, b;    // 1-bit inputs
-    OUT sum,    // a + b right bit
-        carry;  // a + b left bit
+  IN a, b;    // 1-bit inputs
+  OUT sum,    // a + b right bit
+      carry;  // a + b left bit
 
-    PARTS:
-      Xor(a=a, b=b, out=sum);
-      And(a=a, b=b, out=carry);
+  PARTS:
+    Xor(a=a, b=b, out=sum);
+    And(a=a, b=b, out=carry);
 }

@@ -1,6 +1,6 @@
 /**
  * Or gate: out = Or(a, b)
- *              = Not( And(Not(a), Not(b) )
+ *              = Not( And(Not(a), Not(b)) )
  * 
  *    a b  out
  *    --------
@@ -16,8 +16,8 @@ CHIP Or {
   OUT out;
 
   PARTS:
-    Not (in = a, out = notA);
-    Not (in = b, out = notB);
-    And (a = notA, b = notB, out = andNotANotB);
-    Not (in = andNotANotB, out = out);
+    Not(in=a, out=notA);
+    Not(in=b, out=notB);
+    And(a=notA, b=notB, out=andNotANotB);
+    Not(in=andNotANotB, out=out);
 }

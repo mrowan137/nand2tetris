@@ -1,13 +1,13 @@
 /**
  * 8-way Demux gate:
- *   out0 = Demux( Demux( Demux(in, sel[2])[0], sel[0])[0], sel[0])[0]
- *   out1 = Demux( Demux( Demux(in, sel[2])[0], sel[0])[0], sel[0])[1]
- *   out2 = Demux( Demux( Demux(in, sel[2])[0], sel[0])[1], sel[0])[0]
- *   out3 = Demux( Demux( Demux(in, sel[2])[0], sel[0])[1], sel[0])[1]
- *   out4 = Demux( Demux( Demux(in, sel[2])[1], sel[0])[0], sel[0])[0]
- *   out5 = Demux( Demux( Demux(in, sel[2])[1], sel[0])[0], sel[0])[1]
- *   out6 = Demux( Demux( Demux(in, sel[2])[1], sel[0])[1], sel[0])[0]
- *   out7 = Demux( Demux( Demux(in, sel[2])[1], sel[0])[1], sel[0])[1]  
+ *   out0 = Demux( Demux( Demux(in, sel[2])[0], sel[0] )[0], sel[0] )[0]
+ *   out1 = Demux( Demux( Demux(in, sel[2])[0], sel[0] )[0], sel[0] )[1]
+ *   out2 = Demux( Demux( Demux(in, sel[2])[0], sel[0] )[1], sel[0] )[0]
+ *   out3 = Demux( Demux( Demux(in, sel[2])[0], sel[0] )[1], sel[0] )[1]
+ *   out4 = Demux( Demux( Demux(in, sel[2])[1], sel[0] )[0], sel[0] )[0]
+ *   out5 = Demux( Demux( Demux(in, sel[2])[1], sel[0] )[0], sel[0] )[1]
+ *   out6 = Demux( Demux( Demux(in, sel[2])[1], sel[0] )[1], sel[0] )[0]
+ *   out7 = Demux( Demux( Demux(in, sel[2])[1], sel[0] )[1], sel[0] )[1]  
  * 
  *    sel[2] sel[1] sel[0]  a  b  c  d  e  f  g  h
  *    ---------------------------------------------
@@ -22,15 +22,15 @@
  */
 
 CHIP DMux8Way {
-    IN in, sel[3];
-    OUT a, b, c, d, e, f, g, h;
+  IN in, sel[3];
+  OUT a, b, c, d, e, f, g, h;
 
-    PARTS:
-      DMux(in=in, sel=sel[2], a=dmuxABCD, b=dmuxEFGH);
-      DMux(in=dmuxABCD, sel=sel[1], a=dmuxAB, b=dmuxCD);
-      DMux(in=dmuxEFGH, sel=sel[1], a=dmuxEF, b=dmuxGH);
-      DMux(in=dmuxAB, sel=sel[0], a=a, b=b);
-      DMux(in=dmuxCD, sel=sel[0], a=c, b=d);
-      DMux(in=dmuxEF, sel=sel[0], a=e, b=f);
-      DMux(in=dmuxGH, sel=sel[0], a=g, b=h);
+  PARTS:
+    DMux(in=in, sel=sel[2], a=dmuxABCD, b=dmuxEFGH);
+    DMux(in=dmuxABCD, sel=sel[1], a=dmuxAB, b=dmuxCD);
+    DMux(in=dmuxEFGH, sel=sel[1], a=dmuxEF, b=dmuxGH);
+    DMux(in=dmuxAB, sel=sel[0], a=a, b=b);
+    DMux(in=dmuxCD, sel=sel[0], a=c, b=d);
+    DMux(in=dmuxEF, sel=sel[0], a=e, b=f);
+    DMux(in=dmuxGH, sel=sel[0], a=g, b=h);
 }

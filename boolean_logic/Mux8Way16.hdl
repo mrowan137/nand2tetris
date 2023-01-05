@@ -1,7 +1,9 @@
 /**
  * 16-bit 8-way Mux gate: out[i] = Mux16(
- *                                   Mux4Way16(a[i], b[i], c[i], d[i], sel[0..1]),
- *                                   Mux4Way16(e[i], f[i], g[i], h[i], sel[0..1]),
+ *                                   Mux4Way16(a[i], b[i],
+ *                                             c[i], d[i], sel[0..1]),
+ *                                   Mux4Way16(e[i], f[i],
+ *                                             g[i], h[i], sel[0..1]),
  *                                   sel[2]
  *                                 )
  * for i = 0, 1, ..., 15.
