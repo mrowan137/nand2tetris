@@ -63,7 +63,7 @@ Michael E. Rowan — [mrowan137](https://github.com/mrowan137) — [michael@mrow
 
 ## License
 
-[MIT License](https://github.com/mrowan137/connect-k/LICENSE).
+[MIT License](https://github.com/mrowan137/nand2tetris/blob/main/LICENSE).
 
 
 ## References
