@@ -9,7 +9,7 @@ by Hebrew University of Jerusalem through Coursera.
 
 Contents of the repository are as follows:
 * [boolean_logic](https://github.com/mrowan137/nand2tetris/blob/main/boolean_logic) —
-  [HDL (Hardware Description Language)](https://drive.google.com/file/d/1dPj4XNby9iuAs-47U9k3xtYy9hJ-ET0T/view)
+  HDL (Hardware Description Language)
   implementations of elementary logic gates:
   * [And.hdl](https://github.com/mrowan137/nand2tetris/blob/main/boolean_logic/And.hdl)
   * [Or.hdl](https://github.com/mrowan137/nand2tetris/blob/main/boolean_logic/Or.hdl)
@@ -63,17 +63,19 @@ Michael E. Rowan — [mrowan137](https://github.com/mrowan137) — [michael@mrow
 
 ## License
 
-[MIT License](https://github.com/mrowan137/connect-k/LICENSE).
+[MIT License](https://github.com/mrowan137/nand2tetris/blob/main/LICENSE).
 
 
 ## References
 
 * [Build a Modern Computer from First Principles: From Nand to Tetris (Project-Centered Course)](https://www.coursera.org/learn/build-a-computer)
 * [nand2tetris](https://www.nand2tetris.org/)
-* [HDL (Hardware Description Language) guide](https://drive.google.com/file/d/1dPj4XNby9iuAs-47U9k3xtYy9hJ-ET0T/view)
-* [HACK chip set](https://drive.google.com/file/d/1IsDnH0t7q_Im491LQ7_5_ajV0CokRbwR/view)
+* HDL (Hardware Description Language) guide
+* HACK chip set
 
 
 ## Acknowledgments
 
-* Fantastic instructors of the nand2tetris course: [Noam Nisan](https://www.cs.huji.ac.il/~noam/), [Shimon Schocken](https://www.shimonschocken.com/)
+* Instructors of the nand2tetris course
+  * [Noam Nisan](https://www.cs.huji.ac.il/~noam/)
+  * [Shimon Schocken](https://www.shimonschocken.com/)
