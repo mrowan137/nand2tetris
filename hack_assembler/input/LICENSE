@@ -1,0 +1,9 @@
+The HACK assembly files in this directory (*.asm) are from the official
+nand2tetris website (https://www.nand2tetris.org/software) and are made
+available by the authors under the GNU GPL (General Public License) v3.0.
+
+These files are NOT covered by the MIT License that applies to the rest
+of this repository. They remain under their original GPL v3.0 license.
+
+For the full GPL v3.0 license text, see:
+https://www.gnu.org/licenses/gpl-3.0.html

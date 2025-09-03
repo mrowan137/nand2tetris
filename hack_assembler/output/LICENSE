@@ -1,0 +1,12 @@
+The HACK machine code files in this directory (*.hack) are compiled outputs
+from the assembly files in ../input/ which are from the official nand2tetris
+website (https://www.nand2tetris.org/software).
+
+As derivatives of GPL v3.0 licensed software, these files are also under
+the GNU GPL (General Public License) v3.0.
+
+These files are NOT covered by the MIT License that applies to the rest
+of this repository.
+
+For the full GPL v3.0 license text, see:
+https://www.gnu.org/licenses/gpl-3.0.html
